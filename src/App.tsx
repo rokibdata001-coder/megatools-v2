@@ -18,10 +18,16 @@ function App() {
     <StoreProvider>
       <BrowserRouter>
         <Routes>
+          {/* Public routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/signup/:ref" element={<Signup />} />
           <Route path="/logout" element={<Logout />} />
+          
+          {/* Invite links redirect to signup */}
+          <Route path="/:username/Invite/:ref" element={<Navigate to="/signup/:ref" replace />} />
+          <Route path="/:username/login" element={<Navigate to="/login" replace />} />
 
+          {/* Protected routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Navigate to="/overview" replace />} />
             <Route path="overview" element={<Overview />} />
