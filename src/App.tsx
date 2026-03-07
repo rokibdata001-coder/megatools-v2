@@ -22,10 +22,16 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup/:ref" element={<Signup />} />
           <Route path="/logout" element={<Logout />} />
-          
-          {/* Invite links redirect to signup */}
+
+          {/* Invite links - সব লেভেল সাপোর্ট */}
           <Route path="/:username/Invite/:ref" element={<Navigate to="/signup/:ref" replace />} />
+          <Route path="/:username/:moderator/Invite/:ref" element={<Navigate to="/signup/:ref" replace />} />
+          <Route path="/:username/:moderator/:user/Invite/:ref" element={<Navigate to="/signup/:ref" replace />} />
+
+          {/* Login links - সব লেভেল সাপোর্ট */}
           <Route path="/:username/login" element={<Navigate to="/login" replace />} />
+          <Route path="/:username/:moderator/login" element={<Navigate to="/login" replace />} />
+          <Route path="/:username/:moderator/:user/login" element={<Navigate to="/login" replace />} />
 
           {/* Protected routes */}
           <Route path="/" element={<Layout />}>
