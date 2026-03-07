@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useLocation, useNavigate, Link } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, Link, Navigate } from "react-router-dom";
 import { useStore } from "./store";
 
 const NotificationContainer = () => {
@@ -32,9 +32,9 @@ export default function Layout() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
+  // ফিক্সড রিডাইরেক্ট - এখুনি Navigate কম্পোনেন্ট ব্যবহার করা হয়েছে
   if (!currentUser) {
-    navigate('/login');
-    return null;
+    return <Navigate to="/login" replace />;
   }
 
   const sidebarNav = navigation.filter((n: any) => n.position === 'sidebar');
