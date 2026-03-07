@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from '../../store';
 
@@ -6,6 +6,7 @@ export default function Signup() {
     const { register } = useStore();
     const navigate = useNavigate();
     const { ref } = useParams();
+  console.log("Ref from URL:", ref);
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [newUserData, setNewUserData] = useState<any>(null);
