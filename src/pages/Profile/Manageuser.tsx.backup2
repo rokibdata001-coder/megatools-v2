@@ -2,6 +2,11 @@
 import { useStore } from '../../store';
 
 export const ManageReferral = () => {
+
+    // ডিবাগিং ও রিফ্রেশ ফোর্স করার জন্য
+    useEffect(() => {
+        console.log("ManageReferral - users updated:", users);
+    }, [users]);
     const { currentUser, users, approveUser, blockUser, deleteUser, getReferralLink, showToast } = useStore();
     const [statusFilter, setStatusFilter] = useState<'All' | 'Active' | 'Pending' | 'Blocked'>('All');
     const [searchQuery, setSearchQuery] = useState('');
@@ -11,11 +16,6 @@ export const ManageReferral = () => {
     const [showDetailsModal, setShowDetailsModal] = useState(false);
 
     const referralLink = currentUser ? getReferralLink(currentUser) : '';
-
-    // ডিবাগিং ও রিফ্রেশ ফোর্স করার জন্য
-    useEffect(() => {
-        console.log("ManageReferral - users updated:", users);
-    }, [users]);
 
     const getVisibleUsers = () => {
         if (!currentUser) return [];
@@ -162,7 +162,6 @@ export const ManageReferral = () => {
                 
                 <div className="flex-1 p-6 bg-slate-50/30 dark:bg-slate-950/30">
                     <div className="w-full space-y-6">
-                        {/* Referral Link Section */}
                         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
                             <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
                                 <div className="xl:w-1/3">
@@ -193,7 +192,6 @@ export const ManageReferral = () => {
                             </div>
                         </div>
 
-                        {/* Stats Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
                             <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between h-44">
                                 <div className="flex items-start justify-between">
@@ -241,7 +239,6 @@ export const ManageReferral = () => {
                             </div>
                         </div>
 
-                        {/* Users Table */}
                         <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
                             {processedUsers.length === 0 ? (
                                 <div className="p-20 text-center text-slate-300 flex flex-col items-center">
@@ -317,51 +314,21 @@ export const ManageReferral = () => {
                                                     </td>
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex items-center justify-end gap-2">
-                                                            <button 
-                                                                onClick={() => viewDetails(user)}
-                                                                className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 transition-all flex items-center justify-center shadow-sm"
-                                                                title="View Details"
-                                                            >
-                                                                <i className="fas fa-eye"></i>
-                                                            </button>
+                                                            <button onClick={() => viewDetails(user)} className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 border border-indigo-200 transition-all flex items-center justify-center shadow-sm" title="View Details"><i className="fas fa-eye"></i></button>
                                                             
                                                             {user.status === 'Pending' && (
-                                                                <button 
-                                                                    onClick={() => handleApprove(user)} 
-                                                                    className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 transition-all flex items-center justify-center shadow-sm"
-                                                                    title="Approve User"
-                                                                >
-                                                                    <i className="fas fa-check"></i>
-                                                                </button>
+                                                                <button onClick={() => handleApprove(user)} className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 transition-all flex items-center justify-center shadow-sm" title="Approve User"><i className="fas fa-check"></i></button>
                                                             )}
                                                             
                                                             {user.status === 'Active' && (
-                                                                <button 
-                                                                    onClick={() => handleBlock(user)} 
-                                                                    className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white border border-amber-100 transition-all flex items-center justify-center shadow-sm"
-                                                                    title="Block User"
-                                                                >
-                                                                    <i className="fas fa-ban"></i>
-                                                                </button>
+                                                                <button onClick={() => handleBlock(user)} className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 hover:bg-amber-500 hover:text-white border border-amber-100 transition-all flex items-center justify-center shadow-sm" title="Block User"><i className="fas fa-ban"></i></button>
                                                             )}
                                                             
                                                             {user.status === 'Blocked' && (
-                                                                <button 
-                                                                    onClick={() => handleApprove(user)} 
-                                                                    className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 transition-all flex items-center justify-center shadow-sm"
-                                                                    title="Unblock User"
-                                                                >
-                                                                    <i className="fas fa-check"></i>
-                                                                </button>
+                                                                <button onClick={() => handleApprove(user)} className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-500 hover:text-white border border-emerald-100 transition-all flex items-center justify-center shadow-sm" title="Unblock User"><i className="fas fa-check"></i></button>
                                                             )}
                                                             
-                                                            <button 
-                                                                onClick={() => handleDelete(user)} 
-                                                                className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white border border-rose-100 transition-all flex items-center justify-center shadow-sm"
-                                                                title="Delete User"
-                                                            >
-                                                                <i className="fas fa-trash-alt"></i>
-                                                            </button>
+                                                            <button onClick={() => handleDelete(user)} className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-500 hover:text-white border border-rose-100 transition-all flex items-center justify-center shadow-sm" title="Delete User"><i className="fas fa-trash-alt"></i></button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -375,18 +342,13 @@ export const ManageReferral = () => {
                 </div>
             </div>
 
-            {/* User Details Modal */}
             {showDetailsModal && selectedUser && (
                 <div className="fixed inset-0 bg-slate-900/60 dark:bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm animate-fade-in" onClick={() => setShowDetailsModal(false)}>
                     <div className="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl p-6 shadow-2xl animate-modal-slide-in relative border border-slate-200 dark:border-slate-800" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => setShowDetailsModal(false)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-slate-100 transition-colors">
-                            <i className="fas fa-times text-base"></i>
-                        </button>
+                        <button onClick={() => setShowDetailsModal(false)} className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-slate-100 transition-colors"><i className="fas fa-times text-base"></i></button>
                         
                         <h2 className="text-2xl font-black text-slate-800 dark:text-white mb-6 flex items-center gap-3">
-                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl ${selectedUser.avatar_color}`}>
-                                {selectedUser.avatar}
-                            </div>
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl ${selectedUser.avatar_color}`}>{selectedUser.avatar}</div>
                             User Details
                         </h2>
                         
@@ -429,4 +391,4 @@ export const ManageReferral = () => {
             )}
         </div>
     );
-};
+}

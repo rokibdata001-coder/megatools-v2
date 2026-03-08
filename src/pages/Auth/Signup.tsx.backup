@@ -1,15 +1,14 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useStore } from '../../store';
 
 export default function Signup() {
-    const { register, users } = useStore();
+    const { register } = useStore();
     const navigate = useNavigate();
     const { ref } = useParams();
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [newUserData, setNewUserData] = useState<any>(null);
-    const [inviterInfo, setInviterInfo] = useState<{ username: string; role: string } | null>(null);
     const [regData, setRegData] = useState({
         username: '',
         email: '',
@@ -22,28 +21,8 @@ export default function Signup() {
     useEffect(() => {
         if (!ref) {
             navigate('/login');
-            return;
         }
-
-        // রেফারেল কোড দিয়ে ইনভাইটার খুঁজে বের করুন
-        const inviter = users.find((u: any) => u.referral_code.toLowerCase() === ref.toLowerCase());
-        if (inviter) {
-            setInviterInfo({
-                username: inviter.username,
-                role: inviter.role
-            });
-        }
-
-        // ডেমো ডাটা সেট করুন
-        setRegData({
-            username: '',
-            email: '',
-            phone: '01712345678',
-            facebook: 'https://facebook.com/',
-            password: '123456',
-            confirm_password: '123456'
-        });
-    }, [ref, navigate, users]);
+    }, [ref, navigate]);
 
     const validateUsername = (username: string) => {
         if (/\s/.test(username) || username.includes('.')) return 'Username cannot contain spaces or dots.';
@@ -315,21 +294,13 @@ Generated: ${new Date().toLocaleString()}`;
                         M
                     </div>
                     <h1 className="text-3xl font-bold text-slate-800">Megatools.io</h1>
-                    
-                    {/* ইনভাইটার তথ্য দেখান */}
-                    {inviterInfo && (
-                        <div className="mt-4 p-4 bg-indigo-50 rounded-xl border border-indigo-200">
-                            <p className="text-sm font-medium text-indigo-800">
-                                <i className="fas fa-user-plus mr-2"></i>
-                                Invited by: <span className="font-bold">{inviterInfo.username}</span>
-                                <span className="ml-2 px-2 py-0.5 bg-indigo-200 text-indigo-800 rounded-full text-xs">
-                                    {inviterInfo.role}
-                                </span>
-                            </p>
-                        </div>
-                    )}
-
-                    <p className="text-slate-500 mt-4">Complete Registration</p>
+                    <p className="text-slate-500 mt-2">Complete Registration</p>
+                    <div className="mt-3 p-2 bg-indigo-50 rounded-xl border border-indigo-100">
+                        <p className="text-xs font-bold text-indigo-700">
+                            <i className="fas fa-ticket-alt mr-2"></i>
+                            Using Referral Code: <span className="font-mono bg-white px-2 py-0.5 rounded">{ref}</span>
+                        </p>
+                    </div>
                 </div>
                 
                 {errorMessage && (
